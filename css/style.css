@@ -1,6 +1,50 @@
 /* Custom styles can go here if needed. */
-/* For example, for smoother font rendering */
 body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Mobile Menu Styles (BARU) ===== */
+
+/* Overlay for behind the menu */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.mobile-menu-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* The slide-in menu panel */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    max-width: 320px;
+    height: 100%;
+    background-color: white;
+    z-index: 100;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    padding-top: 4rem;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+
+.dark .mobile-menu {
+    background-color: #111827; /* bg-gray-900 */
+}
+
+.mobile-menu.is-open {
+    transform: translateX(0);
 }
