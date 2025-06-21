@@ -7,84 +7,68 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
 
-    console.log("Theme toggle button:", themeToggleBtn);
-    console.log("Theme toggle mobile button:", themeToggleMobileBtn);
-
-    if (!themeToggleBtn && !themeToggleMobileBtn) {
-        console.error("Error: Theme toggle buttons not found in DOM!");
-        return;
-    }
-
     const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
     const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
     const themeToggleDarkMobileIcon = document.getElementById('theme-toggle-dark-icon-mobile');
     const themeToggleLightMobileIcon = document.getElementById('theme-toggle-light-icon-mobile');
 
-    console.log("Icons:", { dark: themeToggleDarkIcon, light: themeToggleLightIcon, darkMobile: themeToggleDarkMobileIcon, lightMobile: themeToggleLightMobileIcon });
-
-    if (!themeToggleDarkIcon || !themeToggleLightIcon || !themeToggleDarkMobileIcon || !themeToggleLightMobileIcon) {
-        console.error("Error: Theme toggle icons not found in DOM!");
-    }
-
-    const applyTheme = (theme) => {
-        console.log("Applying theme:", theme);
+    // Fungsi untuk mengatur tema
+    const setTheme = (theme) => {
+        // Atur tema di HTML
         if (theme === 'dark') {
             document.documentElement.classList.add('dark');
-            if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
-            if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
-            if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.remove('hidden');
-            if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.add('hidden');
+            localStorage.setItem('color-theme', 'dark');
+            
+            // Toggle icon
+            themeToggleLightIcon?.classList.remove('hidden');
+            themeToggleDarkIcon?.classList.add('hidden');
+            themeToggleLightMobileIcon?.classList.remove('hidden');
+            themeToggleDarkMobileIcon?.classList.add('hidden');
         } else {
             document.documentElement.classList.remove('dark');
-            if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
-            if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
-            if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.remove('hidden');
-            if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.add('hidden');
+            localStorage.setItem('color-theme', 'light');
+            
+            // Toggle icon
+            themeToggleDarkIcon?.classList.remove('hidden');
+            themeToggleLightIcon?.classList.add('hidden');
+            themeToggleDarkMobileIcon?.classList.remove('hidden');
+            themeToggleLightMobileIcon?.classList.add('hidden');
         }
-        console.log("Current HTML classes:", document.documentElement.classList.toString());
     };
 
-    let savedTheme;
-    try {
-        savedTheme = localStorage.getItem('color-theme');
-        console.log("Saved theme from localStorage:", savedTheme);
-    } catch (e) {
-        console.error("Failed to access localStorage:", e);
-    }
+    // Fungsi untuk toggle tema
+    const toggleTheme = () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        setTheme(isDark ? 'light' : 'dark');
+    };
 
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    console.log("System prefers dark:", systemPrefersDark);
+    // Inisialisasi tema
+    const initTheme = () => {
+        // Cek localStorage untuk tema yang disimpan
+        const storedTheme = localStorage.getItem('color-theme');
+        
+        // Cek preferensi sistem
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Tentukan tema awal
+        const initialTheme = storedTheme 
+            ? storedTheme 
+            : (systemPrefersDark ? 'dark' : 'light');
+            
+        setTheme(initialTheme);
+    };
 
-    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-    applyTheme(initialTheme);
-
+    // Event listeners
     if (themeToggleBtn) {
-        themeToggleBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            const newTheme = isDark ? 'light' : 'dark';
-            console.log("Toggling to theme:", newTheme);
-            try {
-                localStorage.setItem('color-theme', newTheme);
-            } catch (e) {
-                console.error("Failed to save theme to localStorage:", e);
-            }
-            applyTheme(newTheme);
-        });
+        themeToggleBtn.addEventListener('click', toggleTheme);
     }
 
     if (themeToggleMobileBtn) {
-        themeToggleMobileBtn.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            const newTheme = isDark ? 'light' : 'dark';
-            console.log("Toggling to theme (mobile):", newTheme);
-            try {
-                localStorage.setItem('color-theme', newTheme);
-            } catch (e) {
-                console.error("Failed to save theme to localStorage:", e);
-            }
-            applyTheme(newTheme);
-        });
+        themeToggleMobileBtn.addEventListener('click', toggleTheme);
     }
+
+    // Inisialisasi tema saat pertama kali load
+    initTheme();
 
     // =================================================================
     // --- CTA WHATSAPP LOGIC ---
@@ -93,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const applyWhatsappLinks = () => {
         const ctaButtons = document.querySelectorAll('.cta-button');
-        console.log("Found CTA buttons:", ctaButtons.length);
         ctaButtons.forEach(button => {
             button.href = whatsappURL;
             button.target = '_blank';
@@ -143,10 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // =================================================================
     function renderTestimonials() {
         const grid = document.getElementById('testimonials-grid');
-        if (!grid) {
-            console.error("Testimonials grid not found!");
-            return;
-        }
+        if (!grid) return;
+        
         grid.innerHTML = testimonials.map(t => `
             <div class="flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm p-6">
                 <div class="flex items-center gap-4 mb-4">
@@ -165,10 +146,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderPricing() {
         const grid = document.getElementById('pricing-grid');
-        if (!grid) {
-            console.error("Pricing grid not found!");
-            return;
-        }
+        if (!grid) return;
+        
         grid.innerHTML = plans.map(plan => {
             const proClasses = plan.isPro ? 'border-2 border-blue-500 shadow-lg' : 'border border-gray-200 dark:border-gray-700';
             return `
@@ -204,10 +183,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
-        if (!grid) {
-            console.error("Features grid not found!");
-            return;
-        }
+        if (!grid) return;
+        
         grid.innerHTML = features.map(feature => `
             <div class="flex h-[160px] flex-col justify-center items-center rounded-md p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                 <p class="font-bold text-lg mb-2">${feature.name}</p>
@@ -218,10 +195,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderFaq() {
         const accordion = document.getElementById('faq-accordion');
-        if (!accordion) {
-            console.error("FAQ accordion not found!");
-            return;
-        }
+        if (!accordion) return;
+        
         accordion.innerHTML = faqItems.map(item => `
             <div class="border-b border-gray-200 dark:border-gray-700">
                 <h2>
@@ -237,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `).join('');
+        
         const triggers = accordion.querySelectorAll('.faq-trigger');
         triggers.forEach(trigger => {
             trigger.addEventListener('click', () => {
@@ -263,22 +239,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
-    if (!hamburgerButton || !mobileMenu || !mobileMenuOverlay) {
-        console.error("Mobile menu elements not found!");
-    }
-
     function openMenu() {
         if (mobileMenu) mobileMenu.classList.add('is-open');
         if (mobileMenuOverlay) mobileMenuOverlay.classList.add('is-open');
         document.body.style.overflow = 'hidden';
-        console.log("Mobile menu opened");
     }
 
     function closeMenu() {
         if (mobileMenu) mobileMenu.classList.remove('is-open');
         if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('is-open');
         document.body.style.overflow = '';
-        console.log("Mobile menu closed");
     }
     
     if (hamburgerButton) hamburgerButton.addEventListener('click', openMenu);
