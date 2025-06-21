@@ -1,15 +1,19 @@
 /* css/style.css */
 
-/* Transisi halus untuk perubahan tema */
+/* Fallback untuk memastikan tema berfungsi meskipun Tailwind gagal */
 :root {
     --primary-bg: #ffffff;
     --primary-text: #1f2937;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .dark {
     --primary-bg: #1f2937;
     --primary-text: #e5e7eb;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
 }
 
 /* Gaya untuk mobile menu overlay */
@@ -46,16 +50,20 @@
     transform: translateX(0);
 }
 
-/* Gaya untuk tombol theme toggle di menu mobile */
-#theme-toggle-mobile {
+/* Gaya untuk tombol theme toggle */
+#theme-toggle, #theme-toggle-mobile {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: 1.5rem;
 }
 
-#theme-toggle-mobile svg {
+#theme-toggle i, #theme-toggle-mobile i {
+    font-size: 1.25rem;
     transition: opacity 0.3s ease;
+}
+
+#theme-toggle-mobile {
+    margin-top: 1.5rem;
 }
 
 /* Gaya untuk tombol CTA */
@@ -73,4 +81,9 @@
     .mobile-menu-link {
         font-size: 1.25rem;
     }
+}
+
+/* Debug: Pastikan body berubah warna */
+body {
+    min-height: 100vh;
 }
