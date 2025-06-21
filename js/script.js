@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DATA --- //
+    // --- DATA (Tidak diubah) --- //
     const testimonials = [
         { name: "Jane Doe", title: "CEO, Example Inc.", quote: "This product transformed our workflow! Highly recommended.", avatar: "images/avatars/placeholder.png" },
         { name: "John Smith", title: "Developer, Tech Solutions", quote: "Incredibly easy to set up and use. Saved us countless hours.", avatar: "images/avatars/placeholder.png" },
@@ -31,26 +31,18 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Vercel', description: 'Ready for Vercel deployment.'}
     ];
 
-    // --- HELPER FUNCTIONS --- //
-    // Formats large numbers into k, M, etc.
+    // --- HELPER FUNCTIONS (Tidak diubah) --- //
     function nFormatter(num, digits) {
-        const lookup = [
-            { value: 1, symbol: "" },
-            { value: 1e3, symbol: "k" },
-            { value: 1e6, symbol: "M" },
-            { value: 1e9, symbol: "G" },
-        ];
+        const lookup = [ { value: 1, symbol: "" }, { value: 1e3, symbol: "k" }, { value: 1e6, symbol: "M" }, { value: 1e9, symbol: "G" } ];
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
         const item = lookup.slice().reverse().find(item => num >= item.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
     }
-    
-    // Check mark SVG
     const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M20 6 9 17l-5-5"></path></svg>`;
 
     // --- RENDER FUNCTIONS --- //
 
-    // Renders Testimonials
+    // Renders Testimonials (Tidak diubah)
     function renderTestimonials() {
         const grid = document.getElementById('testimonials-grid');
         if (!grid) return;
@@ -74,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = html;
     }
 
-    // Renders Pricing Plans
+    // Renders Pricing Plans (REVISED)
     function renderPricing() {
         const grid = document.getElementById('pricing-grid');
         if (!grid) return;
@@ -89,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="flex-1 p-6 pt-0">
                         <p class="mb-6 mt-2 flex items-baseline justify-center gap-x-2">
-                            <span class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">$${plan.price}</span>
+                            <span class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white">$${plan.price}</span>
                             <span class="text-sm font-semibold leading-6 tracking-wide text-gray-500 dark:text-gray-400">/month</span>
                         </p>
                         <ul class="space-y-3 text-sm">
@@ -112,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = html;
     }
     
-    // Renders Features
+    // Renders Features (Tidak diubah)
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
         if(!grid) return;
@@ -130,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = html;
     }
 
-    // Renders FAQ
+    // Renders FAQ (Tidak diubah)
     function renderFaq() {
         const accordion = document.getElementById('faq-accordion');
         if (!accordion) return;
@@ -154,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         accordion.innerHTML = html;
 
-        // Add event listeners for the accordion
         const triggers = accordion.querySelectorAll('.faq-trigger');
         triggers.forEach(trigger => {
             trigger.addEventListener('click', () => {
@@ -174,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fetches GitHub Stars
+    // Fetches GitHub Stars (Tidak diubah)
     async function fetchGitHubStars() {
         const starElement = document.getElementById('github-stars');
         if (!starElement) return;
@@ -186,14 +177,15 @@ document.addEventListener('DOMContentLoaded', () => {
             starElement.textContent = nFormatter(stars, 1);
         } catch (error) {
             console.error("Failed to fetch GitHub stars:", error);
-            starElement.textContent = '10k+'; // Fallback
+            starElement.textContent = '10k+';
         }
     }
 
-    // --- INITIALIZE --- //
+    // --- INITIALIZE (Tidak diubah) --- //
     renderTestimonials();
     renderPricing();
     renderFeatures();
     renderFaq();
     fetchGitHubStars();
 });
+
