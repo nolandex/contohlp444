@@ -1,9 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("Script loaded");
+
     // =================================================================
     // --- THEME TOGGLE LOGIC (DARK/LIGHT MODE) ---
     // =================================================================
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+
+    console.log("Theme toggle button:", themeToggleBtn);
+    console.log("Theme toggle mobile button:", themeToggleMobileBtn);
 
     if (themeToggleBtn || themeToggleMobileBtn) {
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
@@ -11,7 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const themeToggleDarkMobileIcon = document.getElementById('theme-toggle-dark-icon-mobile');
         const themeToggleLightMobileIcon = document.getElementById('theme-toggle-light-icon-mobile');
 
+        console.log("Icons found:", themeToggleDarkIcon, themeToggleLightIcon, themeToggleDarkMobileIcon, themeToggleLightMobileIcon);
+
         const applyTheme = (theme) => {
+            console.log("Applying theme:", theme);
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
                 if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
@@ -27,8 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        const savedTheme = localStorage.getItem('color-theme');
+        let savedTheme;
+        try {
+            savedTheme = localStorage.getItem('color-theme');
+        } catch (e) {
+            console.error("Failed to access localStorage:", e);
+        }
         const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        console.log("Saved theme:", savedTheme);
+        console.log("System prefers dark:", systemPrefersDark);
 
         if (savedTheme) {
             applyTheme(savedTheme);
@@ -40,7 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggleBtn.addEventListener('click', () => {
                 const isDark = document.documentElement.classList.contains('dark');
                 const newTheme = isDark ? 'light' : 'dark';
-                localStorage.setItem('color-theme', newTheme);
+                console.log("Toggling to theme:", newTheme);
+                try {
+                    localStorage.setItem('color-theme', newTheme);
+                } catch (e) {
+                    console.error("Failed to save theme to localStorage:", e);
+                }
                 applyTheme(newTheme);
             });
         }
@@ -49,10 +70,17 @@ document.addEventListener('DOMContentLoaded', () => {
             themeToggleMobileBtn.addEventListener('click', () => {
                 const isDark = document.documentElement.classList.contains('dark');
                 const newTheme = isDark ? 'light' : 'dark';
-                localStorage.setItem('color-theme', newTheme);
+                console.log("Toggling to theme (mobile):", newTheme);
+                try {
+                    localStorage.setItem('color-theme', newTheme);
+                } catch (e) {
+                    console.error("Failed to save theme to localStorage:", e);
+                }
                 applyTheme(newTheme);
             });
         }
+    } else {
+        console.error("Theme toggle buttons not found!");
     }
 
     // =================================================================
@@ -187,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderFaq() {
         const accordion = document.getElementById('faq-accordion');
-        if (!accordion) return;
+        if (!grid) return;
         accordion.innerHTML = faqItems.map(item => `
             <div class="border-b border-gray-200 dark:border-gray-700">
                 <h2>
