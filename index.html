@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bisnovo - Landing Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
 </head>
@@ -16,16 +17,14 @@
                 <a href="#" class="text-2xl font-bold">
                     <p>Bisnovo</p>
                 </a>
-
                 <div class="hidden items-center gap-6 lg:flex">
                     <a href="#features" class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-blue-500">Features</a>
                     <a href="#pricing" class="text-sm font-semibold text-gray-600 dark:text-gray-300 hover:text-blue-500">Pricing</a>
                     <button id="theme-toggle" class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800" aria-label="Toggle Light/Dark Mode">
-                        <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
-                        <svg id="theme-toggle-light-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 8.192l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 011.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                        <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 8.192l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 011.414-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
                     </button>
                 </div>
-                
                 <button id="hamburger-button" class="lg:hidden" aria-label="Open Menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
                 </button>
@@ -49,9 +48,9 @@
         <section id="hero">
             <div class="container mx-auto px-6 flex w-full flex-col items-center justify-center space-y-20 py-16 md:py-20 lg:py-24 xl:py-28">
                 <div class="mx-auto w-full max-w-2xl text-center">
-                    <a href="#" target="_blank" rel="noreferrer" class="mx-auto mb-5 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-blue-100 px-7 py-2 transition-colors duration-300 hover:bg-blue-200">
-                        <svg class="h-5 w-5 text-blue-700" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitter</title><path d="M22.46 6c-.77.35-1.6.58-2.46.67.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.22-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21c7.34 0 11.36-6.08 11.36-11.36 0-.17 0-.34-.01-.51.78-.57 1.45-1.29 1.99-2.08z"/></svg>
-                        <p class="text-sm font-semibold text-blue-700">Introducing Our Product</p>
+                    <a href="#" class="cta-button mx-auto mb-5 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full bg-blue-100 px-7 py-2 transition-colors duration-300 hover:bg-blue-200">
+                        <i class="fa-brands fa-whatsapp text-blue-700"></i>
+                        <p class="text-sm font-semibold text-blue-700">Hubungi Kami Sekarang!</p>
                     </a>
                     <h1 class="text-balance bg-gradient-to-br from-gray-900 via-gray-800 to-gray-400 bg-clip-text text-center font-heading text-[40px] font-bold leading-tight tracking-[-0.02em] text-transparent drop-shadow-sm dark:bg-gradient-to-br dark:from-gray-100 dark:to-gray-900 md:text-7xl md:leading-[5rem]">
                         Build Your Project Faster
@@ -60,14 +59,13 @@
                         A starter template with everything you need to build your project.
                     </p>
                     <div class="mx-auto mt-6 flex flex-wrap items-center justify-center gap-4">
-                        <a href="#" class="inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200">
+                        <a href="#" class="cta-button inline-flex items-center justify-center rounded-md bg-gray-900 px-6 py-3 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200">
                             Get Started
                         </a>
                         <a href="https://github.com/moinulmoin/chadnext" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md border border-gray-200 bg-transparent px-6 py-3 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">
                             <span class="font-medium mr-2" id="github-stars">...</span>
-                            <svg class="mr-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                            <span>on</span>
-                            <svg class="ml-2" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                             <i class="fa-brands fa-github mr-1"></i>
+                            <span>on GitHub</span>
                         </a>
                     </div>
                 </div>
@@ -82,8 +80,7 @@
                         This template is packed with all the features you need to get your next project up and running.
                     </p>
                 </div>
-                <div id="features-grid" class="mx-auto grid justify-center gap-4 text-center sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3">
-                    </div>
+                <div id="features-grid" class="mx-auto grid justify-center gap-4 text-center sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3"></div>
              </div>
         </section>
 
@@ -95,8 +92,7 @@
                         Choose the plan that’s right for you and start building.
                     </p>
                 </div>
-                <div id="pricing-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:mx-auto lg:max-w-4xl">
-                    </div>
+                <div id="pricing-grid" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:mx-auto lg:max-w-4xl"></div>
             </div>
         </section>
         
@@ -105,8 +101,7 @@
                 <h2 class="mb-12 text-center text-3xl font-bold md:text-4xl">
                     What Our Users Say
                 </h2>
-                <div id="testimonials-grid" class="grid gap-8 md:grid-cols-3">
-                    </div>
+                <div id="testimonials-grid" class="grid gap-8 md:grid-cols-3"></div>
             </div>
         </section>
 
@@ -115,8 +110,7 @@
                 <h2 class="mb-10 text-center text-3xl font-bold md:text-4xl">
                     Frequently Asked Questions
                 </h2>
-                <div id="faq-accordion" class="mx-auto w-full max-w-3xl">
-                    </div>
+                <div id="faq-accordion" class="mx-auto w-full max-w-3xl"></div>
             </div>
         </section>
 
@@ -129,7 +123,7 @@
                     <p class="max-w-[85%] text-balance leading-normal text-gray-500 dark:text-gray-400 sm:text-lg sm:leading-7">
                         This project is open source and powered by open source software. The code is available on GitHub.
                     </p>
-                    <a class="underline underline-offset-4 font-semibold" href="https://github.com/moinulmoin/chadnext" target="_blank" rel="noreferrer">
+                    <a href="https://github.com/moinulmoin/chadnext" target="_blank" rel="noreferrer" class="underline underline-offset-4 font-semibold">
                         Star on GitHub
                     </a>
                 </div>
@@ -143,11 +137,11 @@
                     Join thousands of developers building faster with our template. Sign up today or star us on GitHub!
                 </p>
                 <div class="flex flex-col justify-center gap-4 sm:flex-row">
-                    <a href="#" class="inline-flex items-center justify-center rounded-md bg-gray-900 px-8 py-3 text-base font-medium text-gray-50 shadow transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200">
+                    <a href="#" class="cta-button inline-flex items-center justify-center rounded-md bg-gray-900 px-8 py-3 text-base font-medium text-gray-50 shadow transition-colors hover:bg-gray-700 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-200">
                         Sign Up Now
                     </a>
-                    <a href="https://github.com/moinulmoin/chadnext" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center rounded-md border border-gray-200 bg-transparent px-8 py-3 text-base font-medium shadow-sm transition-colors hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">
-                        <svg class="mr-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    <a href="https://github.com/moinulmoin/chadnext" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-md border border-gray-200 bg-transparent px-8 py-3 text-base font-medium shadow-sm transition-colors hover:bg-gray-100 dark:border-gray-700 dark:hover:bg-gray-800">
+                        <i class="fa-brands fa-github mr-2"></i>
                         Star on GitHub
                     </a>
                 </div>
@@ -158,24 +152,23 @@
     <footer class="w-full border-t border-gray-200 dark:border-gray-800 py-6">
         <div class="container mx-auto px-6 flex flex-col items-center gap-4">
             <div class="flex items-center justify-center gap-6 md:gap-8">
-                <a href="https://www.instagram.com/bisnovo" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 012.122 2.122c.247.636.416 1.363.465 2.427.048 1.024.06 1.378.06 3.808s-.012 2.784-.06 3.808c-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-2.122 2.122c-.636.247-1.363.416-2.427.465-1.024.048-1.378.06-3.808.06s-2.784-.013-3.808-.06c-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-2.122-2.122c-.247-.636-.416-1.363-.465-2.427-.048-1.024-.06-1.378-.06-3.808s.012-2.784.06-3.808c.049-1.064.218-1.791.465-2.427a4.902 4.902 0 012.122-2.122c.636-.247 1.363-.416 2.427-.465C9.53 2.013 9.884 2 12.315 2zM12 0C9.58 0 9.22.01 8.05.059c-1.214.053-2.074.248-2.827.538a6.902 6.902 0 00-2.926 2.926c-.29.753-.484 1.613-.538 2.827C2.01 9.22 2 9.58 2 12s.01 2.78.059 3.95c.053 1.214.248 2.074.538 2.827a6.902 6.902 0 002.926 2.926c.753.29 1.613.484 2.827.538C9.22 21.99 9.58 22 12 22s2.78-.01 3.95-.059c1.214-.053 2.074-.248 2.827-.538a6.902 6.902 0 002.926-2.926c.29-.753.484-1.613.538-2.827C21.99 14.78 22 14.42 22 12s-.01-2.78-.059-3.95c-.053-1.214-.248-2.074-.538-2.827a6.902 6.902 0 00-2.926-2.926c-.753-.29-1.613-.484-2.827-.538C14.78 2.01 14.42 2 12 2zM12 6.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zM12 15a3 3 0 110-6 3 3 0 010 6zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z" clip-rule="evenodd"/></svg>
+                <a href="https://www.instagram.com/bisnovo" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-white">
+                    <i class="fa-brands fa-instagram text-2xl"></i>
                 </a>
-                <a href="https://www.tiktok.com/@bisnovo" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-2.43.05-4.86-.95-6.69-2.81-1.7-1.7-2.69-3.92-2.63-6.25.05-2.5 1.08-4.81 2.89-6.56 1.95-1.89 4.59-2.99 7.24-2.99.02 2.87-.01 5.74-.02 8.61.01.21.01.43.03.63.03 1.09.38 2.18 1.02 3.02.63.85 1.5 1.44 2.5 1.77.94.3 1.96.33 2.96.04.28-.08.51-.24.7-.44.19-.19.31-.42.38-.66.1-.33.15-.68.14-1.03.01-2.87-.01-5.74-.02-8.61-.06-.8-1.1-1.44-1.96-1.61Z"/></svg>
+                <a href="https://www.tiktok.com/@bisnovo" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-white">
+                    <i class="fa-brands fa-tiktok text-2xl"></i>
                 </a>
-                 <a href="https://www.facebook.com/share/1H87XB9aw7/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878V14.89h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"/></svg>
+                 <a href="https://www.facebook.com/share/1H87XB9aw7/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-white">
+                    <i class="fa-brands fa-facebook text-2xl"></i>
                 </a>
-                <a href="https://api.whatsapp.com/send/?phone=6285156779923" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.426 14.162c-1.144.571-2.288.286-2.717-.285-.428-.572-.393-1.144.036-1.573-.536-.286-1.144-.072-1.573.357-.428.428-.571 1.036-.285 1.573.535.858 1.572 1.287 2.609 1.287.572 0 1.144-.143 1.716-.429a.44.44 0 00.214-.536.43.43 0 00-.535-.214zM12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 21.6c-5.302 0-9.6-4.298-9.6-9.6S6.698 2.4 12 2.4s9.6 4.298 9.6 9.6-4.298 9.6-9.6 9.6z" clip-rule="evenodd"/></svg>
+                <a href="https://api.whatsapp.com/send/?phone=6285156779923" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-white">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
                 </a>
-                <a href="mailto:bisnovohq@gmail.com" aria-label="Email" class="text-gray-500 hover:text-gray-900 dark:hover:text-white">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.003 5.884L10 11.882l7.997-5.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 6-8-6V18a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+                <a href="mailto:bisnovohq@gmail.com" aria-label="Email" class="text-gray-500 transition-colors hover:text-gray-900 dark:hover:text-white">
+                    <i class="fa-solid fa-envelope text-2xl"></i>
                 </a>
             </div>
         </div>
     </footer>
-
 </body>
 </html>
