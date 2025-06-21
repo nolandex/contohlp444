@@ -1,22 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     // =================================================================
     // --- THEME TOGGLE LOGIC (DARK/LIGHT MODE) ---
     // =================================================================
     const themeToggleBtn = document.getElementById('theme-toggle');
-    if (themeToggleBtn) {
+    const themeToggleMobileBtn = document.getElementById('theme-toggle-mobile');
+
+    if (themeToggleBtn || themeToggleMobileBtn) {
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeToggleDarkMobileIcon = document.getElementById('theme-toggle-dark-icon-mobile');
+        const themeToggleLightMobileIcon = document.getElementById('theme-toggle-light-icon-mobile');
 
         const applyTheme = (theme) => {
             if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
-                if(themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
-                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+                if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+                if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+                if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.remove('hidden');
+                if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.add('hidden');
             } else {
                 document.documentElement.classList.remove('dark');
-                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
-                if(themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+                if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+                if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+                if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.remove('hidden');
+                if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.add('hidden');
             }
         };
 
@@ -29,12 +36,23 @@ document.addEventListener('DOMContentLoaded', () => {
             applyTheme(systemPrefersDark ? 'dark' : 'light');
         }
 
-        themeToggleBtn.addEventListener('click', function() {
-            const isDark = document.documentElement.classList.contains('dark');
-            const newTheme = isDark ? 'light' : 'dark';
-            localStorage.setItem('color-theme', newTheme);
-            applyTheme(newTheme);
-        });
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                const newTheme = isDark ? 'light' : 'dark';
+                localStorage.setItem('color-theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
+
+        if (themeToggleMobileBtn) {
+            themeToggleMobileBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.contains('dark');
+                const newTheme = isDark ? 'light' : 'dark';
+                localStorage.setItem('color-theme', newTheme);
+                applyTheme(newTheme);
+            });
+        }
     }
 
     // =================================================================
@@ -153,12 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
         }).join('');
-        applyWhatsappLinks(); // Panggil lagi untuk memastikan tombol yang baru dirender juga diubah
+        applyWhatsappLinks();
     }
     
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
-        if(!grid) return;
+        if (!grid) return;
         grid.innerHTML = features.map(feature => `
             <div class="flex h-[160px] flex-col justify-center items-center rounded-md p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                 <p class="font-bold text-lg mb-2">${feature.name}</p>
