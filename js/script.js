@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Script loaded");
+    console.log("Script loaded at", new Date().toLocaleString());
 
     // =================================================================
     // --- THEME TOGGLE LOGIC (DARK/LIGHT MODE) ---
@@ -10,86 +10,90 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Theme toggle button:", themeToggleBtn);
     console.log("Theme toggle mobile button:", themeToggleMobileBtn);
 
-    if (themeToggleBtn || themeToggleMobileBtn) {
-        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-        const themeToggleDarkMobileIcon = document.getElementById('theme-toggle-dark-icon-mobile');
-        const themeToggleLightMobileIcon = document.getElementById('theme-toggle-light-icon-mobile');
+    if (!themeToggleBtn && !themeToggleMobileBtn) {
+        console.error("Error: Theme toggle buttons not found in DOM!");
+        return;
+    }
 
-        console.log("Icons found:", themeToggleDarkIcon, themeToggleLightIcon, themeToggleDarkMobileIcon, themeToggleLightMobileIcon);
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleDarkMobileIcon = document.getElementById('theme-toggle-dark-icon-mobile');
+    const themeToggleLightMobileIcon = document.getElementById('theme-toggle-light-icon-mobile');
 
-        const applyTheme = (theme) => {
-            console.log("Applying theme:", theme);
-            if (theme === 'dark') {
-                document.documentElement.classList.add('dark');
-                if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
-                if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
-                if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.remove('hidden');
-                if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.add('hidden');
-            } else {
-                document.documentElement.classList.remove('dark');
-                if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
-                if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
-                if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.remove('hidden');
-                if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.add('hidden');
-            }
-        };
+    console.log("Icons:", { dark: themeToggleDarkIcon, light: themeToggleLightIcon, darkMobile: themeToggleDarkMobileIcon, lightMobile: themeToggleLightMobileIcon });
 
-        let savedTheme;
-        try {
-            savedTheme = localStorage.getItem('color-theme');
-        } catch (e) {
-            console.error("Failed to access localStorage:", e);
-        }
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (!themeToggleDarkIcon || !themeToggleLightIcon || !themeToggleDarkMobileIcon || !themeToggleLightMobileIcon) {
+        console.error("Error: Theme toggle icons not found in DOM!");
+    }
 
-        console.log("Saved theme:", savedTheme);
-        console.log("System prefers dark:", systemPrefersDark);
-
-        if (savedTheme) {
-            applyTheme(savedTheme);
+    const applyTheme = (theme) => {
+        console.log("Applying theme:", theme);
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            if (themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+            if (themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+            if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.remove('hidden');
+            if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.add('hidden');
         } else {
-            applyTheme(systemPrefersDark ? 'dark' : 'light');
+            document.documentElement.classList.remove('dark');
+            if (themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+            if (themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+            if (themeToggleDarkMobileIcon) themeToggleDarkMobileIcon.classList.remove('hidden');
+            if (themeToggleLightMobileIcon) themeToggleLightMobileIcon.classList.add('hidden');
         }
+        console.log("Current HTML classes:", document.documentElement.classList.toString());
+    };
 
-        if (themeToggleBtn) {
-            themeToggleBtn.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.contains('dark');
-                const newTheme = isDark ? 'light' : 'dark';
-                console.log("Toggling to theme:", newTheme);
-                try {
-                    localStorage.setItem('color-theme', newTheme);
-                } catch (e) {
-                    console.error("Failed to save theme to localStorage:", e);
-                }
-                applyTheme(newTheme);
-            });
-        }
+    let savedTheme;
+    try {
+        savedTheme = localStorage.getItem('color-theme');
+        console.log("Saved theme from localStorage:", savedTheme);
+    } catch (e) {
+        console.error("Failed to access localStorage:", e);
+    }
 
-        if (themeToggleMobileBtn) {
-            themeToggleMobileBtn.addEventListener('click', () => {
-                const isDark = document.documentElement.classList.contains('dark');
-                const newTheme = isDark ? 'light' : 'dark';
-                console.log("Toggling to theme (mobile):", newTheme);
-                try {
-                    localStorage.setItem('color-theme', newTheme);
-                } catch (e) {
-                    console.error("Failed to save theme to localStorage:", e);
-                }
-                applyTheme(newTheme);
-            });
-        }
-    } else {
-        console.error("Theme toggle buttons not found!");
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    console.log("System prefers dark:", systemPrefersDark);
+
+    const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+    applyTheme(initialTheme);
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const newTheme = isDark ? 'light' : 'dark';
+            console.log("Toggling to theme:", newTheme);
+            try {
+                localStorage.setItem('color-theme', newTheme);
+            } catch (e) {
+                console.error("Failed to save theme to localStorage:", e);
+            }
+            applyTheme(newTheme);
+        });
+    }
+
+    if (themeToggleMobileBtn) {
+        themeToggleMobileBtn.addEventListener('click', () => {
+            const isDark = document.documentElement.classList.contains('dark');
+            const newTheme = isDark ? 'light' : 'dark';
+            console.log("Toggling to theme (mobile):", newTheme);
+            try {
+                localStorage.setItem('color-theme', newTheme);
+            } catch (e) {
+                console.error("Failed to save theme to localStorage:", e);
+            }
+            applyTheme(newTheme);
+        });
     }
 
     // =================================================================
-    // --- MENGUBAH SEMUA TOMBOL CTA KE WHATSAPP ---
+    // --- CTA WHATSAPP LOGIC ---
     // =================================================================
     const whatsappURL = 'https://api.whatsapp.com/send/?phone=6285156779923&text=Halo%2C%20saya%20tertarik%20dengan%20layanan%20Anda.';
     
     const applyWhatsappLinks = () => {
         const ctaButtons = document.querySelectorAll('.cta-button');
+        console.log("Found CTA buttons:", ctaButtons.length);
         ctaButtons.forEach(button => {
             button.href = whatsappURL;
             button.target = '_blank';
@@ -135,21 +139,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M20 6 9 17l-5-5"></path></svg>`;
 
     // =================================================================
-    // --- HELPER FUNCTIONS ---
-    // =================================================================
-    function nFormatter(num, digits) {
-        const lookup = [ { value: 1, symbol: "" }, { value: 1e3, symbol: "k" }, { value: 1e6, symbol: "M" }, { value: 1e9, symbol: "G" }];
-        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-        const item = lookup.slice().reverse().find(item => num >= item.value);
-        return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-    }
-
-    // =================================================================
     // --- RENDER FUNCTIONS ---
     // =================================================================
     function renderTestimonials() {
         const grid = document.getElementById('testimonials-grid');
-        if (!grid) return;
+        if (!grid) {
+            console.error("Testimonials grid not found!");
+            return;
+        }
         grid.innerHTML = testimonials.map(t => `
             <div class="flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm p-6">
                 <div class="flex items-center gap-4 mb-4">
@@ -168,7 +165,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderPricing() {
         const grid = document.getElementById('pricing-grid');
-        if (!grid) return;
+        if (!grid) {
+            console.error("Pricing grid not found!");
+            return;
+        }
         grid.innerHTML = plans.map(plan => {
             const proClasses = plan.isPro ? 'border-2 border-blue-500 shadow-lg' : 'border border-gray-200 dark:border-gray-700';
             return `
@@ -204,7 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
-        if (!grid) return;
+        if (!grid) {
+            console.error("Features grid not found!");
+            return;
+        }
         grid.innerHTML = features.map(feature => `
             <div class="flex h-[160px] flex-col justify-center items-center rounded-md p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                 <p class="font-bold text-lg mb-2">${feature.name}</p>
@@ -215,7 +218,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderFaq() {
         const accordion = document.getElementById('faq-accordion');
-        if (!grid) return;
+        if (!accordion) {
+            console.error("FAQ accordion not found!");
+            return;
+        }
         accordion.innerHTML = faqItems.map(item => `
             <div class="border-b border-gray-200 dark:border-gray-700">
                 <h2>
@@ -237,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const content = trigger.parentElement.nextElementSibling;
                 const icon = trigger.querySelector('svg');
                 const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
-
                 trigger.setAttribute('aria-expanded', !isExpanded);
                 if (isExpanded) {
                     content.style.maxHeight = '0px';
@@ -250,20 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    async function fetchGitHubStars() {
-        const starElement = document.getElementById('github-stars');
-        if (!starElement) return;
-        try {
-            const response = await fetch("https://api.github.com/repos/moinulmoin/chadnext");
-            if (!response.ok) throw new Error('Network response was not ok');
-            const data = await response.json();
-            starElement.textContent = nFormatter(data.stargazers_count, 1);
-        } catch (error) {
-            console.error("Failed to fetch GitHub stars:", error);
-            starElement.textContent = '10k+';
-        }
-    }
-
     // =================================================================
     // --- NAVBAR & MOBILE MENU LOGIC ---
     // =================================================================
@@ -272,16 +263,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
+    if (!hamburgerButton || !mobileMenu || !mobileMenuOverlay) {
+        console.error("Mobile menu elements not found!");
+    }
+
     function openMenu() {
         if (mobileMenu) mobileMenu.classList.add('is-open');
         if (mobileMenuOverlay) mobileMenuOverlay.classList.add('is-open');
         document.body.style.overflow = 'hidden';
+        console.log("Mobile menu opened");
     }
 
     function closeMenu() {
         if (mobileMenu) mobileMenu.classList.remove('is-open');
         if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('is-open');
         document.body.style.overflow = '';
+        console.log("Mobile menu closed");
     }
     
     if (hamburgerButton) hamburgerButton.addEventListener('click', openMenu);
@@ -292,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const href = link.getAttribute('href');
             if (href && href.startsWith('#')) {
                 e.preventDefault();
-                document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
+                document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
             }
             closeMenu();
         });
@@ -305,5 +302,5 @@ document.addEventListener('DOMContentLoaded', () => {
     renderPricing();
     renderFeatures();
     renderFaq();
-    fetchGitHubStars();
+    console.log("Page initialized");
 });
