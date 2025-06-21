@@ -1,6 +1,47 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // =================================================================
+    // --- THEME TOGGLE LOGIC (DARK/LIGHT MODE) ---
+    // =================================================================
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+    // Fungsi untuk mengaplikasikan tema dan ikon
+    const applyTheme = (theme) => {
+        if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            themeToggleLightIcon.classList.remove('hidden');
+            themeToggleDarkIcon.classList.add('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeToggleDarkIcon.classList.remove('hidden');
+            themeToggleLightIcon.classList.add('hidden');
+        }
+    };
+
+    // Cek tema dari localStorage atau preferensi sistem saat halaman dimuat
+    const savedTheme = localStorage.getItem('color-theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+        applyTheme(savedTheme);
+    } else {
+        applyTheme(systemPrefersDark ? 'dark' : 'light');
+    }
+    
+    // Tambahkan event listener untuk tombol toggle
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', function() {
+            const currentTheme = localStorage.getItem('color-theme') || (systemPrefersDark ? 'dark' : 'light');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            localStorage.setItem('color-theme', newTheme);
+            applyTheme(newTheme);
+        });
+    }
+
+    // =================================================================
     // --- DATA ---
     // =================================================================
 
@@ -38,59 +79,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- HELPER FUNCTIONS ---
     // =================================================================
 
-    // Formats large numbers into k, M, etc.
     function nFormatter(num, digits) {
-        const lookup = [
-            { value: 1, symbol: "" },
-            { value: 1e3, symbol: "k" },
-            { value: 1e6, symbol: "M" },
-            { value: 1e9, symbol: "G" },
-        ];
+        const lookup = [ { value: 1, symbol: "" }, { value: 1e3, symbol: "k" }, { value: 1e6, symbol: "M" }, { value: 1e9, symbol: "G" }];
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
         const item = lookup.slice().reverse().find(item => num >= item.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
     }
     
-    // Check mark SVG icon
     const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M20 6 9 17l-5-5"></path></svg>`;
-
 
     // =================================================================
     // --- RENDER FUNCTIONS ---
     // =================================================================
 
-    // Renders Testimonials Section
     function renderTestimonials() {
         const grid = document.getElementById('testimonials-grid');
         if (!grid) return;
-        let html = '';
-        testimonials.forEach(t => {
-            html += `
-                <div class="flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm p-6">
-                    <div class="flex items-center gap-4 mb-4">
-                        <img class="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-600" src="${t.avatar}" alt="${t.name}">
-                        <div>
-                            <p class="font-bold text-gray-900 dark:text-white">${t.name}</p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">${t.title}</p>
-                        </div>
-                    </div>
+        grid.innerHTML = testimonials.map(t => `
+            <div class="flex flex-col rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 shadow-sm p-6">
+                <div class="flex items-center gap-4 mb-4">
+                    <img class="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-600" src="${t.avatar}" alt="${t.name}">
                     <div>
-                        <p class="italic text-gray-600 dark:text-gray-300">"${t.quote}"</p>
+                        <p class="font-bold text-gray-900 dark:text-white">${t.name}</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">${t.title}</p>
                     </div>
                 </div>
-            `;
-        });
-        grid.innerHTML = html;
+                <div>
+                    <p class="italic text-gray-600 dark:text-gray-300">"${t.quote}"</p>
+                </div>
+            </div>
+        `).join('');
     }
 
-    // Renders Pricing Plans Section
     function renderPricing() {
         const grid = document.getElementById('pricing-grid');
         if (!grid) return;
-        let html = '';
-        plans.forEach(plan => {
+        grid.innerHTML = plans.map(plan => {
             const proClasses = plan.isPro ? 'border-2 border-blue-500 shadow-lg' : 'border border-gray-200 dark:border-gray-700';
-            html += `
+            return `
                 <div class="relative flex flex-col rounded-lg ${proClasses} transition duration-200 ease-in-out">
                     <div class="p-6">
                         <h3 class="text-xl font-bold">${plan.title}</h3>
@@ -117,51 +143,38 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
-        });
-        grid.innerHTML = html;
+        }).join('');
     }
     
-    // Renders Features Section
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
         if(!grid) return;
-        let html = '';
-        features.forEach(feature => {
-            html += `
+        grid.innerHTML = features.map(feature => `
             <div class="flex h-[160px] flex-col justify-center items-center rounded-md p-6 border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
                 <p class="font-bold text-lg mb-2">${feature.name}</p>
-                <p class="text-balance text-sm text-gray-500 dark:text-gray-400">
-                    ${feature.description}
-                </p>
+                <p class="text-balance text-sm text-gray-500 dark:text-gray-400">${feature.description}</p>
             </div>
-            `;
-        });
-        grid.innerHTML = html;
+        `).join('');
     }
 
-    // Renders FAQ Section and sets up accordion logic
     function renderFaq() {
         const accordion = document.getElementById('faq-accordion');
         if (!accordion) return;
-        let html = '';
-        faqItems.forEach((item, index) => {
-            html += `
-                <div class="border-b border-gray-200 dark:border-gray-700">
-                    <h2>
-                        <button type="button" class="faq-trigger flex justify-between items-center w-full p-5 font-medium text-left text-gray-800 dark:text-gray-200" aria-expanded="false">
-                            <span>${item.question}</span>
-                            <svg class="w-3 h-3 rotate-0 shrink-0 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/></svg>
-                        </button>
-                    </h2>
-                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
-                        <div class="p-5 border-t-0">
-                            <p class="text-gray-500 dark:text-gray-400">${item.answer}</p>
-                        </div>
+        accordion.innerHTML = faqItems.map(item => `
+            <div class="border-b border-gray-200 dark:border-gray-700">
+                <h2>
+                    <button type="button" class="faq-trigger flex justify-between items-center w-full p-5 font-medium text-left text-gray-800 dark:text-gray-200" aria-expanded="false">
+                        <span>${item.question}</span>
+                        <svg class="w-3 h-3 rotate-0 shrink-0 transition-transform duration-200" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/></svg>
+                    </button>
+                </h2>
+                <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                    <div class="p-5 border-t-0">
+                        <p class="text-gray-500 dark:text-gray-400">${item.answer}</p>
                     </div>
                 </div>
-            `;
-        });
-        accordion.innerHTML = html;
+            </div>
+        `).join('');
 
         const triggers = accordion.querySelectorAll('.faq-trigger');
         triggers.forEach(trigger => {
@@ -171,18 +184,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 
                 trigger.setAttribute('aria-expanded', !isExpanded);
-                if (!isExpanded) {
-                    content.style.maxHeight = content.scrollHeight + 'px';
-                    icon.style.transform = 'rotate(180deg)';
-                } else {
+                if (isExpanded) {
                     content.style.maxHeight = '0px';
                     icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
                 }
             });
         });
     }
 
-    // Fetches GitHub Stars from API
     async function fetchGitHubStars() {
         const starElement = document.getElementById('github-stars');
         if (!starElement) return;
@@ -190,72 +202,53 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch("https://api.github.com/repos/moinulmoin/chadnext");
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            const stars = data.stargazers_count;
-            starElement.textContent = nFormatter(stars, 1);
+            starElement.textContent = nFormatter(data.stargazers_count, 1);
         } catch (error) {
             console.error("Failed to fetch GitHub stars:", error);
-            starElement.textContent = '10k+'; // Fallback value
+            starElement.textContent = '10k+';
         }
     }
-
 
     // =================================================================
     // --- NAVBAR & MOBILE MENU LOGIC ---
     // =================================================================
-
     const hamburgerButton = document.getElementById('hamburger-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
-    // Function to open the mobile menu
     function openMenu() {
         if (mobileMenu) mobileMenu.classList.add('is-open');
         if (mobileMenuOverlay) mobileMenuOverlay.classList.add('is-open');
-        document.body.style.overflow = 'hidden'; // Prevent background from scrolling
+        document.body.style.overflow = 'hidden';
     }
 
-    // Function to close the mobile menu
     function closeMenu() {
         if (mobileMenu) mobileMenu.classList.remove('is-open');
         if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('is-open');
-        document.body.style.overflow = ''; // Restore background scrolling
+        document.body.style.overflow = '';
     }
     
-    // Event listener for the hamburger button to open menu
-    if (hamburgerButton) {
-        hamburgerButton.addEventListener('click', openMenu);
-    }
-
-    // Event listener for the overlay to close the menu
-    if (mobileMenuOverlay) {
-        mobileMenuOverlay.addEventListener('click', closeMenu);
-    }
+    if (hamburgerButton) hamburgerButton.addEventListener('click', openMenu);
+    if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMenu);
     
-    // Event listeners for each menu link to close the menu upon click
     mobileMenuLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const href = link.getAttribute('href');
             if (href && href.startsWith('#')) {
-                e.preventDefault(); // Prevent default anchor behavior
-                // Smoothly scroll to the section
-                document.querySelector(href).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                e.preventDefault();
+                document.querySelector(href).scrollIntoView({ behavior: 'smooth' });
             }
             closeMenu();
         });
     });
 
-
     // =================================================================
     // --- INITIALIZE PAGE ---
     // =================================================================
-
     renderTestimonials();
     renderPricing();
     renderFeatures();
     renderFaq();
     fetchGitHubStars();
-
 });
