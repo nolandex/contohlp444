@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- DATA (Tidak diubah) --- //
+    // =================================================================
+    // --- DATA ---
+    // =================================================================
+
     const testimonials = [
         { name: "Jane Doe", title: "CEO, Example Inc.", quote: "This product transformed our workflow! Highly recommended.", avatar: "images/avatars/placeholder.png" },
         { name: "John Smith", title: "Developer, Tech Solutions", quote: "Incredibly easy to set up and use. Saved us countless hours.", avatar: "images/avatars/placeholder.png" },
@@ -31,18 +34,32 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Vercel', description: 'Ready for Vercel deployment.'}
     ];
 
-    // --- HELPER FUNCTIONS (Tidak diubah) --- //
+    // =================================================================
+    // --- HELPER FUNCTIONS ---
+    // =================================================================
+
+    // Formats large numbers into k, M, etc.
     function nFormatter(num, digits) {
-        const lookup = [ { value: 1, symbol: "" }, { value: 1e3, symbol: "k" }, { value: 1e6, symbol: "M" }, { value: 1e9, symbol: "G" } ];
+        const lookup = [
+            { value: 1, symbol: "" },
+            { value: 1e3, symbol: "k" },
+            { value: 1e6, symbol: "M" },
+            { value: 1e9, symbol: "G" },
+        ];
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
         const item = lookup.slice().reverse().find(item => num >= item.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
     }
+    
+    // Check mark SVG icon
     const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M20 6 9 17l-5-5"></path></svg>`;
 
-    // --- RENDER FUNCTIONS --- //
 
-    // Renders Testimonials (Tidak diubah)
+    // =================================================================
+    // --- RENDER FUNCTIONS ---
+    // =================================================================
+
+    // Renders Testimonials Section
     function renderTestimonials() {
         const grid = document.getElementById('testimonials-grid');
         if (!grid) return;
@@ -66,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = html;
     }
 
-    // Renders Pricing Plans (REVISED)
+    // Renders Pricing Plans Section
     function renderPricing() {
         const grid = document.getElementById('pricing-grid');
         if (!grid) return;
@@ -104,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = html;
     }
     
-    // Renders Features (Tidak diubah)
+    // Renders Features Section
     function renderFeatures() {
         const grid = document.getElementById('features-grid');
         if(!grid) return;
@@ -122,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = html;
     }
 
-    // Renders FAQ (Tidak diubah)
+    // Renders FAQ Section and sets up accordion logic
     function renderFaq() {
         const accordion = document.getElementById('faq-accordion');
         if (!accordion) return;
@@ -165,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Fetches GitHub Stars (Tidak diubah)
+    // Fetches GitHub Stars from API
     async function fetchGitHubStars() {
         const starElement = document.getElementById('github-stars');
         if (!starElement) return;
@@ -177,15 +194,68 @@ document.addEventListener('DOMContentLoaded', () => {
             starElement.textContent = nFormatter(stars, 1);
         } catch (error) {
             console.error("Failed to fetch GitHub stars:", error);
-            starElement.textContent = '10k+';
+            starElement.textContent = '10k+'; // Fallback value
         }
     }
 
-    // --- INITIALIZE (Tidak diubah) --- //
+
+    // =================================================================
+    // --- NAVBAR & MOBILE MENU LOGIC ---
+    // =================================================================
+
+    const hamburgerButton = document.getElementById('hamburger-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
+
+    // Function to open the mobile menu
+    function openMenu() {
+        if (mobileMenu) mobileMenu.classList.add('is-open');
+        if (mobileMenuOverlay) mobileMenuOverlay.classList.add('is-open');
+        document.body.style.overflow = 'hidden'; // Prevent background from scrolling
+    }
+
+    // Function to close the mobile menu
+    function closeMenu() {
+        if (mobileMenu) mobileMenu.classList.remove('is-open');
+        if (mobileMenuOverlay) mobileMenuOverlay.classList.remove('is-open');
+        document.body.style.overflow = ''; // Restore background scrolling
+    }
+    
+    // Event listener for the hamburger button to open menu
+    if (hamburgerButton) {
+        hamburgerButton.addEventListener('click', openMenu);
+    }
+
+    // Event listener for the overlay to close the menu
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', closeMenu);
+    }
+    
+    // Event listeners for each menu link to close the menu upon click
+    mobileMenuLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                e.preventDefault(); // Prevent default anchor behavior
+                // Smoothly scroll to the section
+                document.querySelector(href).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+            closeMenu();
+        });
+    });
+
+
+    // =================================================================
+    // --- INITIALIZE PAGE ---
+    // =================================================================
+
     renderTestimonials();
     renderPricing();
     renderFeatures();
     renderFaq();
     fetchGitHubStars();
-});
 
+});
