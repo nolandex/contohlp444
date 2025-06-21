@@ -4,47 +4,58 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- THEME TOGGLE LOGIC (DARK/LIGHT MODE) ---
     // =================================================================
     const themeToggleBtn = document.getElementById('theme-toggle');
-    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-
-    // Fungsi untuk mengaplikasikan tema dan ikon
-    const applyTheme = (theme) => {
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-            themeToggleLightIcon.classList.remove('hidden');
-            themeToggleDarkIcon.classList.add('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            themeToggleDarkIcon.classList.remove('hidden');
-            themeToggleLightIcon.classList.add('hidden');
-        }
-    };
-
-    // Cek tema dari localStorage atau preferensi sistem saat halaman dimuat
-    const savedTheme = localStorage.getItem('color-theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    if (savedTheme) {
-        applyTheme(savedTheme);
-    } else {
-        applyTheme(systemPrefersDark ? 'dark' : 'light');
-    }
-    
-    // Tambahkan event listener untuk tombol toggle
     if (themeToggleBtn) {
+        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+
+        const applyTheme = (theme) => {
+            if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+                if(themeToggleLightIcon) themeToggleLightIcon.classList.remove('hidden');
+                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                if(themeToggleDarkIcon) themeToggleDarkIcon.classList.remove('hidden');
+                if(themeToggleLightIcon) themeToggleLightIcon.classList.add('hidden');
+            }
+        };
+
+        const savedTheme = localStorage.getItem('color-theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme(systemPrefersDark ? 'dark' : 'light');
+        }
+
         themeToggleBtn.addEventListener('click', function() {
-            const currentTheme = localStorage.getItem('color-theme') || (systemPrefersDark ? 'dark' : 'light');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
+            const isDark = document.documentElement.classList.contains('dark');
+            const newTheme = isDark ? 'light' : 'dark';
             localStorage.setItem('color-theme', newTheme);
             applyTheme(newTheme);
         });
     }
 
     // =================================================================
+    // --- MENGUBAH SEMUA TOMBOL CTA KE WHATSAPP ---
+    // =================================================================
+    const whatsappURL = 'https://api.whatsapp.com/send/?phone=6285156779923&text=Halo%2C%20saya%20tertarik%20dengan%20layanan%20Anda.';
+    
+    const applyWhatsappLinks = () => {
+        const ctaButtons = document.querySelectorAll('.cta-button');
+        ctaButtons.forEach(button => {
+            button.href = whatsappURL;
+            button.target = '_blank';
+            button.rel = 'noopener noreferrer';
+        });
+    };
+    
+    applyWhatsappLinks();
+
+    // =================================================================
     // --- DATA ---
     // =================================================================
-
     const testimonials = [
         { name: "Jane Doe", title: "CEO, Example Inc.", quote: "This product transformed our workflow! Highly recommended.", avatar: "images/avatars/placeholder.png" },
         { name: "John Smith", title: "Developer, Tech Solutions", quote: "Incredibly easy to set up and use. Saved us countless hours.", avatar: "images/avatars/placeholder.png" },
@@ -75,23 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Vercel', description: 'Ready for Vercel deployment.'}
     ];
 
+    const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M20 6 9 17l-5-5"></path></svg>`;
+
     // =================================================================
     // --- HELPER FUNCTIONS ---
     // =================================================================
-
     function nFormatter(num, digits) {
         const lookup = [ { value: 1, symbol: "" }, { value: 1e3, symbol: "k" }, { value: 1e6, symbol: "M" }, { value: 1e9, symbol: "G" }];
         const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
         const item = lookup.slice().reverse().find(item => num >= item.value);
         return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
     }
-    
-    const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5"><path d="M20 6 9 17l-5-5"></path></svg>`;
 
     // =================================================================
     // --- RENDER FUNCTIONS ---
     // =================================================================
-
     function renderTestimonials() {
         const grid = document.getElementById('testimonials-grid');
         if (!grid) return;
@@ -137,13 +146,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         </ul>
                     </div>
                     <div class="p-6 pt-0 justify-center">
-                        <a href="#" class="w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-12 px-6 ${plan.isPro ? 'bg-gray-900 dark:bg-gray-50 text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-200' : 'border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800'}">
+                        <a href="#" class="cta-button w-full inline-flex items-center justify-center rounded-md text-sm font-medium h-12 px-6 ${plan.isPro ? 'bg-gray-900 dark:bg-gray-50 text-white dark:text-black hover:bg-gray-700 dark:hover:bg-gray-200' : 'border border-gray-300 dark:border-gray-600 bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800'}">
                             ${plan.isPro ? 'Upgrade to Pro' : 'Get Started'}
                         </a>
                     </div>
                 </div>
             `;
         }).join('');
+        applyWhatsappLinks(); // Panggil lagi untuk memastikan tombol yang baru dirender juga diubah
     }
     
     function renderFeatures() {
@@ -175,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         `).join('');
-
         const triggers = accordion.querySelectorAll('.faq-trigger');
         triggers.forEach(trigger => {
             trigger.addEventListener('click', () => {
